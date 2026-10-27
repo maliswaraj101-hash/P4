@@ -1,0 +1,21 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 512 256"
+  fill="none"
+  width="512"
+  height="256"
+>
+  <!--
+    Your flat SM mark (sm-mark.tsx) on the same 64px grid as CD.
+    Use THIS as the shape to extrude with Fast Isometric.
+  -->
+  <rect width="512" height="256" fill="#111" />
+  <g stroke="#222" stroke-width="1">
+    <path d="M64 0V256M128 0V256M192 0V256M256 0V256M320 0V256M384 0V256M448 0V256" />
+    <path d="M0 64H512M0 128H512M0 192H512" />
+  </g>
+  <path
+    fill="#fff"
+    d="M192 0H64v64h128V0ZM64 0H0v128h64V0ZM192 96H64v64h128V96ZM192 128h64v128H192V128ZM192 192H64v64h128v-64ZM288 0h64v256H288V0ZM448 0h64v256h-64V0ZM352 0h32v128H352V0ZM416 0h32v128H416V0ZM384 64h32v128H384V64Z"
+  />
+</svg>

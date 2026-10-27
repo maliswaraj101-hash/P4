@@ -1,0 +1,34 @@
+{
+  "name": "swaraj-portfolio-video",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "capture": "tsx scripts/capture.ts",
+    "studio": "remotion studio src/index.ts",
+    "render:landscape": "remotion render src/index.ts Portfolio16x9 out/portfolio-16x9.mp4 --codec=h264 --crf=18",
+    "render:vertical": "remotion render src/index.ts Portfolio9x16 out/portfolio-9x16.mp4 --codec=h264 --crf=18",
+    "render": "npm run render:landscape && npm run render:vertical",
+    "audio": "tsx scripts/build-audio.ts",
+    "render:sound:landscape": "remotion render src/index.ts Portfolio16x9Sound out-sound/.render/portfolio-16x9.mp4 --codec=h264 --crf=18",
+    "render:sound:vertical": "remotion render src/index.ts Portfolio9x16Sound out-sound/.render/portfolio-9x16.mp4 --codec=h264 --crf=18",
+    "mux": "tsx scripts/mux-audio.ts",
+    "check:sync": "tsx scripts/check-sync.ts out-sound/portfolio-16x9.mp4 out-sound/portfolio-9x16.mp4",
+    "render:sound": "npm run audio && npm run render:sound:landscape && npm run render:sound:vertical && npm run mux && npm run check:sync",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.529",
+    "@remotion/google-fonts": "^4.0.529",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "remotion": "4.0.529"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "playwright": "^1.63.0",
+    "tsx": "^4.23.15",
+    "typescript": "~6.0.2"
+  }
+}

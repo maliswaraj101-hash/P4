@@ -1,0 +1,190 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap");
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant pointer-fine (@media (hover: hover) and (pointer: fine));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-line: var(--line);
+  --radius-lg: var(--radius);
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+  --font-handwritten: "Caveat", cursive;
+}
+
+:root {
+  /* Warm off-white like vinitpatil.me — not pure #fff */
+  --background: #fcfcfb;
+  --foreground: #0a0a0a;
+  --muted: #f0f0ef;
+  --muted-foreground: #8a8a8a;
+  --border: #e8e8e8;
+  --input: #e8e8e8;
+  --ring: #a3a3a3;
+  --line: color-mix(in oklab, var(--border) 64%, var(--background));
+  --radius: 0.625rem;
+  --header-height: 3.5rem;
+  /* Extra space on mobile for bottom nav + fade (chanhdai pattern) */
+  --fade-bottom-height: 7.5rem;
+  --expo-out: linear(
+    0 0%,
+    0.1684 2.66%,
+    0.3165 5.49%,
+    0.446 8.52%,
+    0.5581 11.78%,
+    0.6535 15.29%,
+    0.7341 19.11%,
+    0.8011 23.3%,
+    0.8557 27.93%,
+    0.8962 32.68%,
+    0.9283 38.01%,
+    0.9529 44.08%,
+    0.9711 51.14%,
+    0.9833 59.06%,
+    0.9915 68.74%,
+    1 100%
+  );
+}
+
+.dark {
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.985 0 0);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --border: oklch(0.274 0.006 286.033);
+  --input: oklch(0.274 0.006 286.033);
+  --ring: oklch(0.442 0.017 285.786);
+  --line: color-mix(in oklab, var(--border) 64%, var(--background));
+}
+
+@media (min-width: 40rem) {
+  :root {
+    --fade-bottom-height: 6rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply antialiased;
+    color-scheme: light dark;
+  }
+
+  body {
+    @apply m-0 min-h-svh bg-background font-sans text-foreground;
+  }
+
+  /* Theme toggle wipe — circle from top-right (vinitpatil.me style) */
+  ::view-transition-group(root) {
+    animation-timing-function: var(--expo-out);
+  }
+
+  ::view-transition-old(root),
+  .dark::view-transition-old(root) {
+    animation: none;
+    animation-fill-mode: both;
+    z-index: -1;
+  }
+
+  ::view-transition-new(root) {
+    mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle cx="40" cy="0" r="18" fill="white"/></svg>')
+      right top / 0 no-repeat;
+    animation: theme-circle-scale 1s;
+    animation-fill-mode: both;
+    transform-origin: right top;
+  }
+
+  @keyframes theme-circle-scale {
+    to {
+      mask-size: 300vmax;
+    }
+  }
+}
+
+@utility screen-line-top {
+  @apply relative;
+  &:before {
+    content: "";
+    @apply absolute top-0 left-[-100vw] -z-1 h-px w-[200vw] bg-line;
+  }
+}
+
+@utility screen-line-top-* {
+  &:before {
+    background-color: --value(--color-*, [color]);
+  }
+}
+
+@utility screen-line-bottom {
+  @apply relative;
+  &:after {
+    content: "";
+    @apply absolute bottom-0 left-[-100vw] -z-1 h-px w-[200vw] bg-line;
+  }
+}
+
+@utility screen-line-bottom-* {
+  &:after {
+    background-color: --value(--color-*, [color]);
+  }
+}
+
+@utility screen-dashed-line-top {
+  @apply screen-line-top;
+  &:before {
+    content: "";
+    @apply bg-inherit bg-[linear-gradient(to_right,var(--line)_4px,transparent_2px)] bg-size-[6px_1px] bg-repeat-x;
+  }
+}
+
+@utility screen-dashed-line-bottom {
+  @apply screen-line-bottom;
+  &:after {
+    content: "";
+    @apply bg-inherit bg-[linear-gradient(to_right,var(--line)_4px,transparent_2px)] bg-size-[6px_1px] bg-repeat-x;
+  }
+}
+
+@utility screen-line-top-none {
+  @apply before:content-none;
+}
+
+@utility screen-line-bottom-none {
+  @apply after:content-none;
+}
+
+@utility diagonal-stripes {
+  @apply [--pattern-foreground:var(--color-line)]/56;
+  @apply bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px];
+}
+
+@utility dot-grid {
+  @apply [--pattern-foreground:var(--color-zinc-950)]/5 dark:[--pattern-foreground:var(--color-white)]/5;
+  @apply bg-[radial-gradient(var(--pattern-foreground)_1px,transparent_0)] bg-size-[8px_8px];
+}
+
+@utility stripe-divider {
+  @apply relative h-8;
+  &:before {
+    content: "";
+    @apply absolute left-[-100vw] -z-1 h-full w-[200vw] diagonal-stripes;
+  }
+}
+
+@utility stroke-line {
+  stroke: var(--line);
+}
+
+@utility fill-background {
+  fill: var(--background);
+}

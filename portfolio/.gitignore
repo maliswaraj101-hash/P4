@@ -1,0 +1,37 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Secrets (OpenRouter and others — local/dev only)
+.env
+.env.*
+!.env.example
+
+# Portfolio video: generated captures and renders
+video/public/
+video/out/
+video/out-sound/
+
+# Local reference clone (do not ship)
+_inspo-chanhdai/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

@@ -1,0 +1,29 @@
+﻿# dependencies / envs
+node_modules/
+venv/
+myenv/
+.venv/
+env/
+
+# secrets
+.env
+.env.*
+!.env.example
+
+# caches / builds
+__pycache__/
+*.pyc
+.next/
+dist/
+build/
+out/
+.cache/
+*.egg-info/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+.ipynb_checkpoints/
